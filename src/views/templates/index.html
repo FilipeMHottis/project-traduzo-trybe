@@ -19,9 +19,9 @@
             <select name="translate-from">
               {% for language in languages %}
                 {% if language['acronym'] == translate_from %}
-                  <option value="{{ language['acronym'] }}" selected>{{ language["name"] }}</option>
+                  <option value="{{ language.acronym }}" selected>{{ language.name }}</option>
                 {% else %}
-                  <option value="{{ language['acronym'] }}">{{ language["name"] }}</option>
+                  <option value="{{ language.acronym }}">{{ language.name }}</option>
                 {% endif %}
               {% endfor %}
             </select>
