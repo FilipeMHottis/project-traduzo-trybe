@@ -61,12 +61,9 @@ def reverse():
         "translate_to": request.form.get("translate-from"),
     }
 
+    translated = data["text_to_translate"]
     data["text_to_translate"] = _translate(
         data["translate_to"], data["translate_from"], data["text_to_translate"]
-    )
-
-    translated = _translate(
-        data["translate_from"], data["translate_to"], data["text_to_translate"]
     )
 
     return _render(data, translated)
