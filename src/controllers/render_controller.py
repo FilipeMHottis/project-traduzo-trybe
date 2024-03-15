@@ -7,7 +7,7 @@ from deep_translator import GoogleTranslator
 render_controller = Blueprint("render_controller", __name__)
 
 
-class FormResquest(TypedDict):
+class FormRequest(TypedDict):
     text_to_translate: str
     translate_from: str
     translate_to: str
@@ -27,7 +27,11 @@ def index():
 
 @render_controller.route("/", methods=["POST"])
 def translate():
-    data: FormResquest = request.form.to_dict()
+    data: FormRequest = {
+        "text_to_translate": request.form.get("text-to-translate"),
+        "translate_from": request.form.get("translate-from"),
+        "translate_to": request.form.get("translate-to"),
+    }
     translated = GoogleTranslator(
         source=data["translate_from"], target=data["translate_to"]
     ).translate(data["text_to_translate"])
