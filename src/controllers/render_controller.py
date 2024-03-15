@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request
 from typing import TypedDict
 from models.language_model import LanguageModel
 from deep_translator import GoogleTranslator
+from models.history_model import HistoryModel
 
 
 render_controller = Blueprint("render_controller", __name__)
@@ -49,6 +50,8 @@ def translate():
     translated = _translate(
         data["translate_from"], data["translate_to"], data["text_to_translate"]
     )
+
+    HistoryModel(data).save()
 
     return _render(data, translated)
 
