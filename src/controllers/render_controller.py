@@ -1,8 +1,16 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request
+from typing import TypedDict
 from models.language_model import LanguageModel
+from deep_translator import GoogleTranslator
 
 
 render_controller = Blueprint("render_controller", __name__)
+
+
+class FormResquest(TypedDict):
+    text_to_translate: str
+    translate_from: str
+    translate_to: str
 
 
 @render_controller.route("/", methods=["GET"])
@@ -14,4 +22,23 @@ def index():
         translate_from="pt",
         translate_to="en",
         translated="What do you want to translate?",
+    )
+
+
+@render_controller.route("/", methods=["POST"])
+def translate():
+    data: FormResquest = request.form.to_dict()
+    translated = GoogleTranslator(
+        source=data["translate_from"], target=data["translate_to"]
+    ).translate(data["text_to_translate"])
+
+    print(data["translate_from"])
+
+    return render_template(
+        "index.html",
+        languages=LanguageModel.list_dicts(),
+        text_to_translate=data["text_to_translate"],
+        translate_from=data["translate_from"],
+        translate_to=data["translate_to"],
+        translated=translated,
     )
