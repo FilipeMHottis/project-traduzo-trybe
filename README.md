@@ -46,6 +46,13 @@ python3 -u src/app.py
 docker-compose up -d
 ```
 
+### Seeders
+
+```bash
+# Execute os seeders para popular o banco de dados com dados necessários para a aplicação funcionar corretamente
+python3 -u src/run_seeds.py
+```
+
 ### Executando os Testes
 
 ```bash
